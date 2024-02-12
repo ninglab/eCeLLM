@@ -1,0 +1,273 @@
+@import url("https://assets.bux.osu.edu/bux-webfonts2/bux-webfonts2.css");
+
+/* Reset default styles */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+/* Set default font family and size */
+body {
+  font-family: 'BuckeyeSans', sans-serif;
+  font-size: 20px;
+  line-height: 1.0;
+  background-color:#ffffff; /* white from the BUX color palette */
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+html {
+    width: 100vw;
+}
+main {
+    width: 98vw;
+    margin: 1vw;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: bold;
+  color: #BA0C2F; /* scarlet dark 40 from the BUX color palette */
+  margin-bottom: 10px;
+}
+
+p {
+  margin-bottom: 10px;
+}
+
+header, nav {
+    background-color: #cfd4d8; /* gray-light-40 from the BUX color palette */
+    padding: 10px;
+    text-align: center;
+}
+
+header h1 {
+    padding-top: 5vh;
+    margin-left: 10vw;
+    margin-right: 10vw;
+}
+
+sup {
+  vertical-align: super;
+  font-size: smaller;
+}
+
+sub {
+  vertical-align: sub;
+  font-size: smaller;
+}
+
+.authors {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.authors li, .affiliations li {
+  padding: 5px;
+  padding-right: 10px;
+}
+
+.affiliations {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  list-style: none;
+}
+
+section {
+    padding: 1vw;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:5vh;
+    margin-bottom: 0px;
+}
+
+section img {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 10px;  
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+iframe {
+    width: 100%;
+    height: auto;
+    height: 50vh;
+}
+
+footer {
+    margin-left: 5vw;
+    margin-right: 5vw;
+    font-size: 12px;
+    padding-bottom: 5px;
+}
+
+ul.tabs li {
+    display: inline-block;
+    text-decoration: none;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 10px;
+    margin: 0px;
+    background-color: #cfd4d8; /* gray-light-40 from the BUX color palette */
+    color: #BA0C2F; /* scarlet from the BUX color palette */
+}
+
+ul.tabs a:link a:visited a:active {
+    color: #BA0C2F; /* scarlet from the BUX color palette */
+    text-decoration: none;
+}
+
+ul.tabs li.active {
+    background-color:#212325;
+    color: #ffffff;
+    text-decoration-color: #ffffff;
+    font-weight: 900;
+}
+
+ul.tabs a:hover {
+  text-decoration: none;
+  font-weight: 900;
+}
+
+.centering {
+    text-align: center;
+}
+.centering *{
+    text-align: center;
+}
+
+.justified {
+  text-align: justify;
+}
+.justified *{
+  text-align: justify;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+nav ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+  width: 60%;
+  margin-left: 20%;
+  margin-right: 20%;
+  padding: 0;
+}
+
+nav ul li {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  min-width: 80px;
+  background-color: 	#212325; /* gray dark 80 from BUX color palette */
+  padding: 5px;
+  color: #ffffff; /* scarlet from the BUX color palette */  
+  border-radius: 25px;
+}
+
+nav {
+  padding-bottom: 20px;
+}
+
+a:link, a:active, a:visited {
+    color: #BA0C2F; /* scarlet from the BUX color palette */
+    text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+nav ul.navigation a {
+  text-decoration: none;
+  text-decoration-style: none;
+}
+
+.emails li a{
+  font-size: 16px;
+}
