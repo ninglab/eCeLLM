@@ -1,6 +1,6 @@
 # eCeLLM
 
-This repo contains the code, data, and models for "eCeLLM: Generalizing Large Language Models for E-commerce from Large-scale, High-quality Instruction Data"
+This repo contains the code for "eCeLLM: Generalizing Large Language Models for E-commerce from Large-scale, High-quality Instruction Data"
 
 ## Introduction
 We introduce ECInstruct, 
@@ -27,19 +27,17 @@ OOD settings, including unseen products and unseen instructions
 * datasets = 2.15.0
 
 ## ECInstruct Dataset
-The dataset is avaliable in [Hugging Face](https://huggingface.co/datasets/xin10/ECInstruct).
-ECInstruct comprises 10 tasks, including attribute valua extraction, product relation predict,
-product matching, sentiment analysis, senquential recommendation, multiclass product classification, product
+The dataset is available in [Hugging Face](https://huggingface.co/datasets/xin10/ECInstruct).
+ECInstruct comprises 10 tasks, including attribute value extraction, product relation prediction,
+product matching, sentiment analysis, sequential recommendation, multiclass product classification, product
 substitute identification, query-product ranking, answerability prediction, and answer generation. 
 ECInstruct is split into training sets, validation sets, IND
 test sets, and OOD test sets.
 
-All the data in ECInstruct is in the "ECInstruct" folder. As detailed in the paper, for each task, we could conduct training and evaluation under multiple settings. All data for these settings are available in the "ECInstruct" folder. For example, the "ECInstruct/Answer_Generation/IND_Diverse_Instruction" folder has the training set for learning models on the answer generation task with diverse instructions and the IND test set for this task.
-
 ## eCeLLM Models
-The models are avaliable in [Hugging Face](https://huggingface.co/xin10).
+The models are available in [Hugging Face](https://huggingface.co/xin10).
 Leveraging ECInstruct, we develop eCeLLM by instruction tuning general-purpose LLMs (base models).
-The "eCeLLM" folder has the eCeLLM models instruction-tuned from 6 large base models: [Flan-T5 XXL](https://arxiv.org/abs/2210.11416), [Llama-2 13B-chat](https://arxiv.org/abs/2307.09288), [Llama-2 7B-chat](https://arxiv.org/abs/2307.09288), [Mistral-7B Instruct-v0.2](https://arxiv.org/abs/2310.06825), [Flan-T5 XL](https://arxiv.org/abs/2210.11416) and [Phi-2](https://www.microsoft.com/en-us/research/blog/phi-2-the-surprising-power-of-small-language-models/).
+The eCeLLM-S is instruction-tuned on base models [Phi-2](https://www.microsoft.com/en-us/research/blog/phi-2-the-surprising-power-of-small-language-models/), eCeLLM-M is tuned on [Mistral-7B Instruct-v0.2](https://arxiv.org/abs/2310.06825), and eCeLLM-L is tuned on [Llama-2 13B-chat](https://arxiv.org/abs/2307.09288).
 
 ## Training
 To instruction-tune the base models, run <code>./finetune.sh $number_epoches $base_model $number_validation_samples</code>
@@ -58,11 +56,13 @@ Example:
 Please replace "finetune.py" with "finetune_T5.py" in "finetune.sh" when tuning Flan-T5-XXL and Flan-T5-XL.
 
 ## Inference
-To conduct model inference, run <code>./inference.sh $model_path $test_path $output_path $base_model</code>.
+To conduct model inference, run <code>./inference.sh $model_path $task $setting $output_path $base_model</code>.
 
 <code>$model_path</code> is the path of the instruction-tuned model.
 
-<code>$test_path</code> specifies the path of the test samples.
+<code>$task</code> specifies the task to be tested.
+
+<code>$setting</code> specifies the evaluation setting.
 
 <code>$output_path</code> specifies the path where you want to save the inference output.
 
@@ -70,7 +70,7 @@ To conduct model inference, run <code>./inference.sh $model_path $test_path $out
 
 Example:
 ```
-./inference.sh eCeLLM/Mistral-7B-Instruct-v0.2 ECInstruct/Product_Matching/IND_Diverse_Instruction/test.json evaluation/IND_Diverse_Instruction.json Mistral-7B-Instruct-v0.2
+./inference.sh eCeLLM/Mistral-7B-Instruct-v0.2 Product_Matching IND_Diverse_Instruction evaluation/IND_Diverse_Instruction.json Mistral-7B-Instruct-v0.2
 ```
 
 Please replace "inference.py" with "inference_T5.py" in "inference.sh" when inferencing Flan-T5-XXL and Flan-T5-XL.
@@ -78,7 +78,7 @@ Please replace "inference.py" with "inference_T5.py" in "inference.sh" when infe
 ## Evaluation
 To evaluate the instruction-tuned model on specific tasks, run <code>python evaluate.py --task $task --setting $setting</code>.
 
-<code>$task</code> is the task on which you want to conduct evaluation.
+<code>$task</code> is the task on which you want to conduct the evaluation.
 
 <code>$setting</code> specifies the evaluation setting.
 
