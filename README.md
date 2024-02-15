@@ -88,3 +88,15 @@ python evaluate.py --task Product_Matching --setting IND_Diverse_Instruction
 ```
 
 Please use "evaluate_T5.py" when evaluating Flan-T5-XXL and Flan-T5-XL.
+
+## Citation
+```bibtex
+@misc{peng2024ecellm,
+      title={eCeLLM: Generalizing Large Language Models for E-commerce from Large-scale, High-quality Instruction Data}, 
+      author={Bo Peng and Xinyi Ling and Ziru Chen and Huan Sun and Xia Ning},
+      year={2024},
+      eprint={2402.08831},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
+}
+```
