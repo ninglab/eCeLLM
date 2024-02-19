@@ -7,7 +7,7 @@ import fire
 import torch
 import transformers
 from peft import PeftModel
-from transformers import GenerationConfig, AutoModelForSeq2SeqLM, AutoTokenizer, pipeline
+from transformers import GenerationConfig, AutoModelForCausalLM, AutoTokenizer, pipeline
 from datasets import load_dataset
 import json
 
@@ -22,54 +22,50 @@ if torch.cuda.is_available():
 else:
     device = "cpu"
 
+## Load merged model
+    
 def main(
     load_8bit: bool = False,
-    use_lora: bool = True,
-    base_model: str = "../llama30B_hf",
-    lora_weights: str = "",
+    model_name: str = "NingLab/eCeLLM-L",
     prompt_template: str = "mistral",
     task: str = "",
     setting: str = "",
     output_data_path: str = ""
-
 ):
     base_model = base_model or os.environ.get("BASE_MODEL", "")
-
     prompter = Prompter(prompt_template)
     tokenizer = AutoTokenizer.from_pretrained(base_model)
     if device == "cuda":
-        model = AutoModelForSeq2SeqLM.from_pretrained(
-            base_model,
+        model = AutoModelForCausalLM.from_pretrained(
+            model_name,
             load_in_8bit=load_8bit,
             torch_dtype=torch.bfloat16,
             device_map="auto",
-            trust_remote_code=True,
+            trust_remote_code=True
         )
-        if use_lora:
-            model = PeftModel.from_pretrained(
-                model,
-                lora_weights,
-                torch_dtype=torch.bfloat16,
-            )
 
-    model = model.merge_and_unload()
+    if not load_8bit:
+        model.bfloat16()
 
     model.eval()
     if torch.__version__ >= "2" and sys.platform != "win32":
         model = torch.compile(model)
 
+    if not model.config.eos_token_id:
+        tokenizer.pad_token_id = tokenizer.eos_token_id
+        tokenizer.padding_side = 'left'
+        model.config.eos_token_id = tokenizer.eos_token_id
+    else:
+        tokenizer.pad_token_id = model.config.eos_token_id
+        tokenizer.padding_side = 'left'
+
     pipe = pipeline(
-        "text2text-generation", 
+        "text-generation", 
         model=model, 
         tokenizer = tokenizer, 
-        torch_dtype=torch.bfloat16, 
+        torch_dtype=torch.float16, 
         device_map="auto",
     )
-
-    data_list = json.load(open(data_path, 'r'))
-    instructions = [data["instruction"] for data in data_list]
-    inputs = [data["input"] for data in data_list]
-    options = [data["options"] if "options" in data else None for data in data_list]
 
     dataset = load_dataset("NingLab/ECInstruct")["train"]
     instructions, inputs, options = [], [], []
@@ -80,7 +76,7 @@ def main(
             options.append(data["options"])
 
     results = []
-    max_batch_size = 4
+    max_batch_size = 2
     for i in range(0, len(instructions), max_batch_size):
         instruction_batch = instructions[i:i + max_batch_size]
         input_batch = inputs[i:i + max_batch_size]
@@ -108,11 +104,12 @@ def evaluate(prompter, prompts, tokenizer, pipe, batch_size):
         top_p=0.95,
         num_return_sequences=1,
         num_beams=1,
+        pad_token_id=tokenizer.eos_token_id,
         batch_size=batch_size,
     )
 
     for i in range(len(generation_output)):    
-        resp = generation_output[i]['generated_text']
+        resp = prompter.get_response(generation_output[i][0]['generated_text'])
         batch_outputs.append(resp)
 
     return batch_outputs

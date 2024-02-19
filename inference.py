@@ -8,6 +8,7 @@ import torch
 import transformers
 from peft import PeftModel
 from transformers import GenerationConfig, AutoModelForCausalLM, AutoTokenizer, pipeline
+from datasets import load_dataset
 import json
 
 from utils.callbacks import Iteratorize, Stream
@@ -27,7 +28,8 @@ def main(
     base_model: str = "../llama30B_hf",
     lora_weights: str = "",
     prompt_template: str = "mistral",
-    data_path: str = "",
+    task: str = "",
+    setting: str = "",
     output_data_path: str = ""
 
 ):
@@ -84,10 +86,18 @@ def main(
         device_map="auto",
     )
 
-    data_list = json.load(open(data_path, 'r'))
-    instructions = [data["instruction"] for data in data_list]
-    inputs = [data["input"] for data in data_list]
-    options = [data["options"] if "options" in data else None for data in data_list]
+    # data_list = json.load(open(data_path, 'r'))
+    # instructions = [data["instruction"] for data in data_list]
+    # inputs = [data["input"] for data in data_list]
+    # options = [data["options"] if "options" in data else None for data in data_list]
+
+    dataset = load_dataset("NingLab/ECInstruct")["train"]
+    instructions, inputs, options = [], [], []
+    for data in dataset:
+        if data["split"] == "test" and data["task"] == task and data["setting"] == setting:
+            instructions.append(data["instruction"])
+            inputs.append(data["input"])
+            options.append(data["options"])
 
     results = []
     max_batch_size = 2
