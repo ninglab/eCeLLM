@@ -1,6 +1,6 @@
 # eCeLLM
 
-This repo contains the code for "eCeLLM: Generalizing Large Language Models for E-commerce from Large-scale, High-quality Instruction Data"
+This repo contains the code for "[eCeLLM: Generalizing Large Language Models for E-commerce from Large-scale, High-quality Instruction Data](https://arxiv.org/abs/2402.08831)"
 
 ## Introduction
 We introduce ECInstruct, 
@@ -27,7 +27,7 @@ OOD settings, including unseen products and unseen instructions
 * datasets = 2.15.0
 
 ## ECInstruct Dataset
-The dataset is available in [Hugging Face](https://huggingface.co/datasets/xin10/ECInstruct).
+The dataset is available in [Hugging Face](https://huggingface.co/datasets/NingLab/ECInstruct).
 ECInstruct comprises 10 tasks, including attribute value extraction, product relation prediction,
 product matching, sentiment analysis, sequential recommendation, multiclass product classification, product
 substitute identification, query-product ranking, answerability prediction, and answer generation. 
@@ -35,7 +35,7 @@ ECInstruct is split into training sets, validation sets, IND
 test sets, and OOD test sets.
 
 ## eCeLLM Models
-The models are available in [Hugging Face](https://huggingface.co/xin10).
+The models are available in [Hugging Face](https://huggingface.co/NingLab).
 Tuned on our ECInstruct dataset, we develop eCeLLM by instruction tuning general-purpose LLMs (base models).
 The eCeLLM-S is instruction-tuned on base models [Phi-2](https://www.microsoft.com/en-us/research/blog/phi-2-the-surprising-power-of-small-language-models/), eCeLLM-M is tuned on [Mistral-7B Instruct-v0.2](https://arxiv.org/abs/2310.06825), and eCeLLM-L is tuned on [Llama-2 13B-chat](https://arxiv.org/abs/2307.09288).
 
