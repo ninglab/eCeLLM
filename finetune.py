@@ -5,6 +5,9 @@ from typing import List
 import fire
 import torch
 import transformers
+import pandas as pd
+import pyarrow as pa
+from datasets import Dataset
 from datasets import load_dataset
 from datasets import disable_caching
 disable_caching()
@@ -59,8 +62,8 @@ class LoadBestPeftModelCallback(TrainerCallback):
 def train(
     # model/data params
     base_model: str = "", 
-    data_path: str = "",
-    dev_data_path: str = "",
+    # data_path: str = "",
+    # dev_data_path: str = "",
     output_dir: str = "",
     # training hyperparams
     batch_size: int = 128,
@@ -94,9 +97,9 @@ def train(
 ):
     if int(os.environ.get("LOCAL_RANK", 0)) == 0:
         print(
-            f"Params using prompt template {prompt_template_name}:\n"
+            f"Params using prompt template: {prompt_template_name}\n"
             f"base_model: {base_model}\n"
-            f"data_path: {data_path}\n"
+            # f"data_path: {data_path}\n"
             f"output_dir: {output_dir}\n"
             f"batch_size: {batch_size}\n"
             f"micro_batch_size: {micro_batch_size}\n"
@@ -248,16 +251,26 @@ def train(
 
     model = get_peft_model(model, config)
 
-    if data_path.endswith(".json") or data_path.endswith(".jsonl"):
-        data = load_dataset("json", data_files=data_path)
-    else:
-        data = load_dataset(data_path)
+    # load from huggingface
+    dataset = pd.DataFrame(load_dataset("NingLab/ECInstruct")['train'])
+
+    data = dataset[(dataset["split"] == "train") & (dataset["setting"] == "IND_Diverse_Instruction")]
+    data = Dataset(pa.Table.from_pandas(data))
+
+    dev_data = dataset[(dataset["split"] == "val") & (dataset["setting"] == "IND_Diverse_Instruction")]
+    dev_data = Dataset(pa.Table.from_pandas(dev_data))
+    
+    ## load from google drive
+    # if data_path.endswith(".json") or data_path.endswith(".jsonl"):
+    #     data = load_dataset("json", data_files=data_path)
+    # else:
+    #     data = load_dataset(data_path)
     #data.cleanup_cache_files()
     
-    if dev_data_path.endswith(".json") or dev_data_path.endswith(".jsonl"):
-        dev_data = load_dataset("json", data_files=dev_data_path)
-    else:
-        dev_data = load_dataset(dev_data_path)
+    # if dev_data_path.endswith(".json") or dev_data_path.endswith(".jsonl"):
+    #     dev_data = load_dataset("json", data_files=dev_data_path)
+    # else:
+    #     dev_data = load_dataset(dev_data_path)
 
     if resume_from_checkpoint:
         # Check the available weights and load them

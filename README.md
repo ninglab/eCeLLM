@@ -18,11 +18,11 @@ OOD settings, including unseen products and unseen instructions
 
 ## Requirements:
 
+* python = 3.10.6
 * torch = 2.1.2
 * transformers = 4.36.2
 * fire = 0.5.0
-* json = 2.0.9
-* sklearn = 1.3.2
+* scikit-learn = 1.3.2
 * peft = 0.7.1
 * datasets = 2.15.0
 
@@ -33,6 +33,8 @@ product matching, sentiment analysis, sequential recommendation, multiclass prod
 substitute identification, query-product ranking, answerability prediction, and answer generation. 
 ECInstruct is split into training sets, validation sets, IND
 test sets, and OOD test sets.
+
+We also provide the product labels for the test set of query-product ranking task in `/data_label/label.json`, which can be used for evaluating. Please check https://github.com/amazon-science/esci-data for more details.
 
 ## eCeLLM Models
 The models are available in [Hugging Face](https://huggingface.co/NingLab).

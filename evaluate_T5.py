@@ -3,20 +3,28 @@ from sklearn.metrics import precision_score, accuracy_score, recall_score, f1_sc
 import json
 import pdb
 import re
+from datasets import load_dataset
 
 def main(
     label_path: str = "test.json",
     task: str = "",
     setting: str = "",
 ):
-    
-    PATH = f'ECInstruct/{task}/{setting}'
-    label_list = json.load(open(f'{PATH}/{label_path}', 'r'))
+    ## load from google drive
+    # PATH = f'ECInstruct/{task}/{setting}'
+    # label_list = json.load(open(f'{PATH}/{label_path}', 'r'))
+    # for i in range(len(label_list)):
+    #     label_list[i] = label_list[i]['output']
+
+    # load from huggingface
+    dataset = load_dataset("NingLab/ECInstruct")["train"]
+    label_list = []
+    for data in dataset:
+        if data["split"] == "test" and data["task"] == task and data["setting"] == setting:
+            label_list.append(data["output"])
 
     prediction_path = f'evaluation/{task}/{setting}.json'
     prediction_list = json.load(open(prediction_path, 'r'))
-    for i in range(len(label_list)):
-        label_list[i] = label_list[i]['output']
     
     #evaluation for extraction tasks
     if (task == 'Attribute_Value_Extraction'):

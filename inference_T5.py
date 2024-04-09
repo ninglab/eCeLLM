@@ -28,6 +28,7 @@ def main(
     base_model: str = "../llama30B_hf",
     lora_weights: str = "",
     prompt_template: str = "mistral",
+    # data_path: str = "",
     task: str = "",
     setting: str = "",
     output_data_path: str = ""
@@ -66,11 +67,13 @@ def main(
         device_map="auto",
     )
 
-    data_list = json.load(open(data_path, 'r'))
-    instructions = [data["instruction"] for data in data_list]
-    inputs = [data["input"] for data in data_list]
-    options = [data["options"] if "options" in data else None for data in data_list]
+    ## load from google drive
+    # data_list = json.load(open(data_path, 'r'))
+    # instructions = [data["instruction"] for data in data_list]
+    # inputs = [data["input"] for data in data_list]
+    # options = [data["options"] if "options" in data else None for data in data_list]
 
+    # load from huggingface
     dataset = load_dataset("NingLab/ECInstruct")["train"]
     instructions, inputs, options = [], [], []
     for data in dataset:

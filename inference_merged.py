@@ -28,6 +28,7 @@ def main(
     load_8bit: bool = False,
     model_name: str = "NingLab/eCeLLM-L",
     prompt_template: str = "mistral",
+    # data_path: str = "",
     task: str = "",
     setting: str = "",
     output_data_path: str = ""

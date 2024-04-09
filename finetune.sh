@@ -3,6 +3,7 @@
 set num_epochs = $1
 set model = $2
 set val_num_samples = $3
+# set master_port = $4
 
 if ($val_num_samples == "1k") then
     set num_val = 1000
@@ -42,15 +43,17 @@ else
     set prompt_template_name = ""
 endif
 
-echo $master_port
 #uncomment the following code to apply multi-gpu training
+# echo $master_port
 #setenv CUDA_VISIBLE_DEVICES "0,1"
 #accelerate launch --main_process_port $master_port finetune.py\
 
+## argment for loading from google drive
+# --data-path ECInstruct/ECInstruct/Diverse_Instruction/train.json \
+# --dev-data-path ECInstruct/ECInstruct/Diverse_Instruction/val.json \
+
 python finetune.py \
     --base_model $base_model \
-    --data-path ECInstruct/ECInstruct/Diverse_Instruction/train.json \
-    --dev-data-path ECInstruct/ECInstruct/Diverse_Instruction/val.json \
     --output_dir eCeLLM \
     --batch_size 128 \
     --micro_batch_size 1 \
