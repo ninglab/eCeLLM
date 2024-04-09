@@ -34,7 +34,7 @@ substitute identification, query-product ranking, answerability prediction, and 
 ECInstruct is split into training sets, validation sets, IND
 test sets, and OOD test sets.
 
-We also provide the product labels for the test set of query-product ranking task in `/data_label/label.json`, which can be used for evaluating. Please check https://github.com/amazon-science/esci-data for more details.
+We also provide the product labels for the test set of query-product ranking task in `/data_label/label.json`, which can be used for evaluation. Please check https://github.com/amazon-science/esci-data for more details.
 
 ## eCeLLM Models
 The models are available in [Hugging Face](https://huggingface.co/NingLab).
