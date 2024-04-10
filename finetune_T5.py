@@ -186,10 +186,10 @@ def train(
     # load from huggingface
     dataset = pd.DataFrame(load_dataset("NingLab/ECInstruct")['train'])
 
-    data = dataset[(dataset["split"] == "train") & (dataset["setting"] == "IND_Diverse_Instruction")]
+    data = dataset[(dataset["split"] == "train") & (dataset["setting"] == "IND_Diverse_Instruction")].drop(["split", "setting", "few_shot_example", "task"], axis=1)
     data = Dataset(pa.Table.from_pandas(data))
 
-    dev_data = dataset[(dataset["split"] == "val") & (dataset["setting"] == "IND_Diverse_Instruction")]
+    dev_data = dataset[(dataset["split"] == "val") & (dataset["setting"] == "IND_Diverse_Instruction")].drop(["split", "setting", "few_shot_example", "task"], axis=1)
     dev_data = Dataset(pa.Table.from_pandas(dev_data))
     
     ## load from google drive
