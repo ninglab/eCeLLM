@@ -225,8 +225,8 @@ def train(
 
     model.print_trainable_parameters()
 
-    train_data = data["train"].shuffle().map(generate_and_tokenize_prompt)
-    val_data = dev_data["train"].shuffle().map(generate_and_tokenize_prompt)
+    train_data = data.shuffle().map(generate_and_tokenize_prompt)
+    val_data = dev_data.shuffle().map(generate_and_tokenize_prompt)
 
     if not ddp and torch.cuda.device_count() > 1:
         model.is_parallelizable = True
