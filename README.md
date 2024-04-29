@@ -91,6 +91,22 @@ python evaluate.py --task Product_Matching --setting IND_Diverse_Instruction
 
 Please use "evaluate_T5.py" when evaluating Flan-T5-XXL and Flan-T5-XL.
 
+## Inference_merged
+To conduct inference of the model loaded from huggingface, run <code>./inference_merged.sh $model_name $task $setting $output_path</code>.
+
+<code>$model_name</code> is the name of the huggingface model.
+
+<code>$task</code> specifies the task to be tested.
+
+<code>$setting</code> specifies the evaluation setting.
+
+<code>$output_path</code> specifies the path where you want to save the inference output.
+
+Example:
+```
+./inference_merged.sh NingLab/eCeLLM-M Product_Matching IND_Diverse_Instruction evaluation/PM.json
+```
+
 ## Citation
 ```bibtex
 @misc{peng2024ecellm,
