@@ -26,16 +26,15 @@ else:
     
 def main(
     load_8bit: bool = False,
-    model_name: str = "NingLab/eCeLLM-L",
+    model_name: str = "NingLab/eCeLLM-M",
     prompt_template: str = "mistral",
-    # data_path: str = "",
     task: str = "",
     setting: str = "",
     output_data_path: str = ""
 ):
-    base_model = base_model or os.environ.get("BASE_MODEL", "")
+    # base_model = base_model or os.environ.get("BASE_MODEL", "")
     prompter = Prompter(prompt_template)
-    tokenizer = AutoTokenizer.from_pretrained(base_model)
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
     if device == "cuda":
         model = AutoModelForCausalLM.from_pretrained(
             model_name,
@@ -99,7 +98,7 @@ def evaluate(prompter, prompts, tokenizer, pipe, batch_size):
 
     generation_output = pipe(
         prompts,
-        do_sample=True,
+        # do_sample=True,
         max_new_tokens=100,
         temperature=0.15,
         top_p=0.95,
