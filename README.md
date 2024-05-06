@@ -1,4 +1,5 @@
 # eCeLLM
+✨ Our paper was accepted to ICML 2024.
 
 This repo contains the code for [eCeLLM: Generalizing Large Language Models for E-commerce from Large-scale, High-quality Instruction Data](https://arxiv.org/abs/2402.08831).
 
