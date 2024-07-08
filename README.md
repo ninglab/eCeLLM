@@ -110,12 +110,12 @@ Example:
 
 ## Citation
 ```bibtex
-@misc{peng2024ecellm,
-      title={eCeLLM: Generalizing Large Language Models for E-commerce from Large-scale, High-quality Instruction Data}, 
-      author={Bo Peng and Xinyi Ling and Ziru Chen and Huan Sun and Xia Ning},
-      year={2024},
-      eprint={2402.08831},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL}
+@inproceedings{
+peng2024ecellm,
+title={eCe{LLM}: Generalizing Large Language Models for E-commerce from Large-scale, High-quality Instruction Data},
+author={Bo Peng and Xinyi Ling and Ziru Chen and Huan Sun and Xia Ning},
+booktitle={Forty-first International Conference on Machine Learning},
+year={2024},
+url={https://openreview.net/forum?id=LWRI4uPG2X}
 }
 ```
