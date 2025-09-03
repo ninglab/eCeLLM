@@ -59,7 +59,7 @@ Example:
 Please replace "finetune.py" with "finetune_T5.py" in "finetune.sh" when tuning Flan-T5-XXL and Flan-T5-XL.
 
 ## Inference
-To conduct model inference, run <code>./inference.sh $model_path $task $setting $output_path $base_model</code>.
+To conduct inference on finetuned LLMs, run <code>./inference.sh $model_path $task $setting $output_path $base_model</code>.
 
 <code>$model_path</code> is the path of the instruction-tuned model.
 
