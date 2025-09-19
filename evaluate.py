@@ -81,6 +81,15 @@ def main(
                                 attribute2hit[pred["attribute"]] = 0
                             attribute2hit[pred["attribute"]] += 1
 
+        # ADD THIS SECTION - Count predictions per attribute
+        for i in range(len(prediction_list)):
+            for pred in idx2pred[i]:
+                if "attribute" in pred:
+                    attr = pred["attribute"]
+                    if attr not in attribute2count_pred:
+                        attribute2count_pred[attr] = 0
+                    attribute2count_pred[attr] += 1
+        
         total_hit = 0
         total_count_label = 0
         total_count_pred = 0
